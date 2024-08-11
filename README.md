@@ -68,6 +68,33 @@ Data Preprocessing:
 - Categorized sales data by day, hour, month, and pizza type.
 - Calculated total revenue, total pizzas sold, total orders, average pizzas per order, and average order value.
 - Aggregated data for visualization (e.g., customer trends by day, monthly sales).
+
+
+## Data Analysis
+
+Some questions answered  in this project with code:
+
+1. How many customers do we have each day?
+``` sql
+SELECT
+    TO_CHAR(date, 'FMDay') AS days_of_the_week,
+    COUNT(*) AS total_customers
+FROM orders_table
+GROUP BY days_of_the_week
+ORDER BY total_customers DESC;
+```
+
+2. Top five pizza bestsellers?
+``` sql
+SELECT name,
+	SUM(quantity * price) AS revenue
+FROM order_details
+JOIN pizzas_table ON order_details.pizza_id = pizzas_table.pizza_id
+JOIN pizza_types_table ON pizzas_table.pizza_type_id = pizza_types_table.pizza_type_id
+GROUP BY name
+ORDER BY revenue DESC
+LIMIT 5;
+```
   
 ## Results
 Summary of Key Findings and Insights
